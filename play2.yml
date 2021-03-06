@@ -1,0 +1,45 @@
+---
+- name: Playbook to build cardano worker node
+  become: no
+  tasks:
+
+    - name: Download cabal
+      get_url:
+        url: https://downloads.haskell.org/~cabal/cabal-install-3.2.0.0/cabal-install-3.2.0.0-x86_64-unknown-linux.tar.xz
+        dest: ./cabal-install-3.2.0.0-x86_64-unknown-linux.tar.xz
+        mode: '0755'
+
+    - name: Extract cabal install
+      ansible.builtin.unarchive:
+        src: ./cabal-install-3.2.0.0-x86_64-unknown-linux.tar.xz
+        dest: /home/ada
+        remote_src: yes
+
+    - name: Remove cabal tar file and signature
+      ansible.builtin.file:
+        path: '{{ item }}'
+        state: absent
+      loop:
+        - cabal-install-3.2.0.0-x86_64-unknown-linux.tar.xz
+        - cabal.sig
+
+    - name: Create the .local/bin directory
+      ansible.builtin.file:
+        path: /home/ada/.local/bin
+        state: directory
+        mode: '0755'
+
+    - name: Copy cabal to it's final destination
+      copy: 
+        remote_src: True
+        src: /home/ada/cabal 
+        dest: /home/ada/.local/bin
+        mode: 0555
+
+    - name: Remove old cabal file
+      file: path=/home/ada/cabal state=absent
+
+    - name: Run command cabal update
+      command: cabal update 
+
+

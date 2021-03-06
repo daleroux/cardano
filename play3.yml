@@ -1,0 +1,46 @@
+---
+- name: Playbook to build cardano worker node
+  remote_user: root
+  tasks:
+
+    - name: Download GHC
+      get_url:
+        url: https://downloads.haskell.org/~ghc/8.10.2/ghc-8.10.2-x86_64-deb9-linux.tar.xz
+        dest: /root/ghc-8.10.2-x86_64-deb9-linux.tar.xz
+        mode: '0755'
+
+    - name: Extract GHC install
+      ansible.builtin.unarchive:
+        src: /root/ghc-8.10.2-x86_64-deb9-linux.tar.xz
+        dest: /root
+        remote_src: yes
+
+
+    - name: Remove ghc tar file and signature
+      ansible.builtin.file:
+        path: /root/ghc-8.10.2-x86_64-deb9-linux.tar.xz
+        state: absent
+
+
+    - name: Configuring NGINX source with custom modules
+      command: "./configure"
+      args:
+        chdir: /root/ghc-8.10.2
+
+
+    - name: Installing NGINX
+      shell: make install
+      args:
+        chdir: /root/ghc-8.10.2
+   # - name: Run configure
+   #   ansible.builtin.shell: ./configure >> configure_log.txt
+   #   args:
+   #     chdir: /root/ghc-8.10.2
+
+
+    #- name: Run 'make install' target as root
+    #  make:
+    #    chdir: /root/ghc-8.10.2
+    #    target: install
+
+  

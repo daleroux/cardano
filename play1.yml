@@ -1,0 +1,28 @@
+---
+- name: Playbook to build cardano worker node
+  tasks:
+
+
+    - name: upgrade all packages
+      yum: 
+        name: "*"
+        state: latest
+
+    - name:  install a first wave of packages
+      yum: 
+        name: 
+          - git 
+          - gcc 
+          - gcc-c++ 
+          - tmux 
+          - gmp-devel 
+          - make 
+          - tar 
+          - wget
+          - zlib-devel 
+          - libtool 
+          - autoconf
+          - systemd-devel 
+          - ncurses-devel 
+          - ncurses-compat-libs
+        state: latest

@@ -1,0 +1,8 @@
+- hosts: localhost
+  collections:
+    - geerlingguy.k8s
+
+  tasks:
+  - name: run my version of hello_world role
+    debug:
+      msg: "test"
