@@ -1,4 +1,3 @@
----
 - name: Playbook to build cardano worker node
   remote_user: root
   tasks:
