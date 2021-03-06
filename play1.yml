@@ -1,5 +1,8 @@
 ---
 - name: Playbook to build cardano worker node
+  collections:
+    - geerlingguy.k8s
+
   tasks:
 
 

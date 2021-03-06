@@ -1,6 +1,8 @@
 ---
 - name: Playbook to build cardano worker node
   become: no
+  collections:
+    - geerlingguy.k8s
   tasks:
 
     - name: Download cabal
