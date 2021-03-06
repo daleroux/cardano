@@ -3,6 +3,26 @@
     - geerlingguy.k8s
 
   tasks:
-  - name: run my version of hello_world role
-    debug:
-      msg: "test"
+    - name: upgrade all packages
+      yum: 
+        name: "*"
+        state: latest
+
+    - name:  install a first wave of packages
+      yum: 
+        name: 
+          - git 
+          - gcc 
+          - gcc-c++ 
+          - tmux 
+          - gmp-devel 
+          - make 
+          - tar 
+          - wget
+          - zlib-devel 
+          - libtool 
+          - autoconf
+          - systemd-devel 
+          - ncurses-devel 
+          - ncurses-compat-libs
+        state: latest
