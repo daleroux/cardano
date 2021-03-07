@@ -1,7 +1,9 @@
-- name: Playbook to build cardano worker node
+- hosts: all
+  remote_user: ada
   become: no
   collections:
     - geerlingguy.k8s
+
   tasks:
 
     - name: Download cabal
